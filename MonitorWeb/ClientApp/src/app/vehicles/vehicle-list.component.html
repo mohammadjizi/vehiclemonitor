@@ -1,0 +1,53 @@
+<div >
+  <h1>Vehicle Monitor</h1>
+</div>
+
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter by Customer Name or Vehicle Status">
+</mat-form-field>
+
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
+
+  <!-- ownsershipId Column -->
+  <ng-container matColumnDef="ownsershipId">
+    <mat-header-cell class="mat-header" *matHeaderCellDef> Vehicle Registration Number </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.ownsershipId}} </mat-cell>
+  </ng-container>
+
+  <!-- vehicleId Column -->
+  <ng-container matColumnDef="vehicleId">
+    <mat-header-cell class="mat-header" *matHeaderCellDef> Vehicle Id </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.vehicleId}} </mat-cell>
+  </ng-container>
+
+  <!-- customerId Column -->
+  <ng-container matColumnDef="customerId">
+    <mat-header-cell class="mat-header" *matHeaderCellDef> Customer Id </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.customerId}} </mat-cell>
+  </ng-container>
+
+  <!-- customerName Column -->
+  <ng-container matColumnDef="customerName">
+    <mat-header-cell class="mat-header" *matHeaderCellDef> Customer Name </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.customerName}} </mat-cell>
+  </ng-container>
+
+  <!-- customerAddress Column -->
+  <ng-container matColumnDef="customerAddress">
+    <mat-header-cell class="mat-header" *matHeaderCellDef> Customer Address </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.customerAddress}} </mat-cell>
+  </ng-container>
+
+  <!-- vehicleStatus Column -->
+  <ng-container matColumnDef="vehicleStatus">
+    <mat-header-cell class="mat-header" *matHeaderCellDef> Vehicle Status (Detached / Linked) </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <app-vehicle-status [vStatus]='element.vehicleStatus '  matTooltip={{element.vehicleStatus}} matTooltipClass="example-tooltip-red" matTooltipPosition="left"></app-vehicle-status>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+

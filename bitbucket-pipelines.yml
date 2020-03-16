@@ -1,0 +1,48 @@
+# This is a sample build configuration for .NET Core.
+# Check our guides at https://confluence.atlassian.com/x/5Q4SMw for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: mohammadjizi/netcore2.1:latest
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - dotnetcore
+        script: # Modify the comma`nds below to build your repository.
+          - export PROJECT_NAME=CustomerApi
+          - export TEST_NAME=CustomerApi.UnitTests
+          - dotnet restore
+          - dotnet build CustomerApi
+          - dotnet test CustomerApi.UnitTests         
+          - export PROJECT_NAME=VehicleApi
+          - export TEST_NAME=VehicleApi.UnitTests
+          - dotnet restore
+          - dotnet build VehicleApi
+          - dotnet test VehicleApi.UnitTests
+          - export PROJECT_NAME=MonitorWeb
+          - export TEST_NAME=MonitorWeb.UnitTests
+          - dotnet restore
+          - dotnet build MonitorWeb
+          - dotnet test MonitorWeb.UnitTests
+    - step:
+        image: wingrunr21/alpine-heroku-cli
+        services:
+              - docker
+        script:
+          - heroku container:login
+          - docker build -f ./CustomerApi/Dockerfile -t customerapi .
+          - docker tag customerapi:latest registry.heroku.com/vehiclemonitor-customerapi/web
+          - docker push registry.heroku.com/vehiclemonitor-customerapi/web
+          - heroku container:release web -a vehiclemonitor-customerapi
+          
+          - docker build -f ./VehicleApi/Dockerfile -t vehicleapi .
+          - docker tag vehicleapi:latest registry.heroku.com/vehiclemonitor-vehicleapi/web
+          - docker push registry.heroku.com/vehiclemonitor-vehicleapi/web
+          - heroku container:release web -a vehiclemonitor-vehicleapi
+          
+          - docker build -f ./MonitorWeb/Dockerfile -t monitorweb .
+          - docker tag monitorweb:latest registry.heroku.com/vehiclemonitor-monitorweb/web
+          - docker push registry.heroku.com/vehiclemonitor-monitorweb/web
+          - heroku container:release web -a vehiclemonitor-monitorweb

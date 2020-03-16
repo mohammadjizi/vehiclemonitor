@@ -1,0 +1,47 @@
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="ownsershipId">
+    <mat-header-cell *matHeaderCellDef> Ownership Id </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.ownsershipId}} </mat-cell>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="vehicleId">
+    <mat-header-cell *matHeaderCellDef> Vehicle Id </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.vehicleId}} </mat-cell>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="customerId">
+    <mat-header-cell *matHeaderCellDef> Customer Id </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.customerId}} </mat-cell>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="customerName">
+    <mat-header-cell *matHeaderCellDef> Customer Name </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.customerName}} </mat-cell>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="customerAddress">
+    <mat-header-cell *matHeaderCellDef> Customer Address </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.customerAddress}} </mat-cell>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="vehicleStatus">
+    <mat-header-cell *matHeaderCellDef> Vehicle Status </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.vehicleStatus}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+

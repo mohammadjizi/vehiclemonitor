@@ -1,0 +1,49 @@
+version: '3.7'
+
+services: 
+    customerapi:
+        build: 
+            context: .
+            dockerfile: CustomerApi/Dockerfile
+        container_name: customer_api
+        ports: 
+            - "8070:80"     
+        networks: 
+            - vehiclemonitor
+        environment: 
+            AWS_ACCESS_KEY_ID: AKIAUT73QWKYDOGWNGMD
+            AWS_SECRET_ACCESS_KEY: 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
+            ASPNETCORE_ENVIRONMENT: Production
+    vehicleapi:
+        build: 
+            context: .
+            dockerfile: VehicleApi/Dockerfile
+        container_name: vehicle_api
+        ports: 
+            - "8090:80"
+        networks: 
+            - vehiclemonitor
+        environment: 
+            AWS_ACCESS_KEY_ID: AKIAUT73QWKYDOGWNGMD
+            AWS_SECRET_ACCESS_KEY: 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
+            ASPNETCORE_ENVIRONMENT: Production
+    monitorweb:
+        build:
+            context: .
+            dockerfile: MonitorWeb/Dockerfile
+        container_name: monitor_web
+        ports:
+            - "8080:80"
+        depends_on: 
+            - customerapi
+            - vehicleapi
+        networks: 
+            - vehiclemonitor
+        environment: 
+            ASPNETCORE_ENVIRONMENT: Production
+            CustomerApiUrl: http://customerapi:80/api/customer
+            VehicleApiUrl:  http://vehicleapi:80/api/vehicle
+
+networks: 
+    vehiclemonitor:
+        #external: true
