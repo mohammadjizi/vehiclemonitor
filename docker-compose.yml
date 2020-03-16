@@ -11,8 +11,8 @@ services:
         networks: 
             - vehiclemonitor
         environment: 
-            AWS_ACCESS_KEY_ID: AKIAUT73QWKYDOGWNGMD
-            AWS_SECRET_ACCESS_KEY: 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
+            AWS_ACCESS_KEY_ID: "will be given upon request"
+            AWS_SECRET_ACCESS_KEY: "will be given upon request"
             ASPNETCORE_ENVIRONMENT: Production
     vehicleapi:
         build: 
@@ -24,8 +24,8 @@ services:
         networks: 
             - vehiclemonitor
         environment: 
-            AWS_ACCESS_KEY_ID: AKIAUT73QWKYDOGWNGMD
-            AWS_SECRET_ACCESS_KEY: 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
+            AWS_ACCESS_KEY_ID: "will be given upon request"
+            AWS_SECRET_ACCESS_KEY: "will be given upon request"
             ASPNETCORE_ENVIRONMENT: Production
     monitorweb:
         build:
